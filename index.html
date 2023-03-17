@@ -8,18 +8,22 @@
     <title>Sonic Runner</title>
   </head>
   <body>
+    <audio autoplay loop controls="false">
+      <source src="Sonic.mp3" type="audio/mpeg">
+    </audio>
     <div class="game-intro">
       <img src="./images/intro.jpeg" alt="" class="logo-img" />
       <br />
-      <button id="start-button">Start</button>
-      <p>Use the space bar to jump!</p>
       <img src="./images/Arrow.png" alt="" class="arrow-img" />
-    </div>
+      <p>Use the arrow up to jump!</p>
+      
 
+    </div>
+    <button id="start-button">Start</button>
     <div id="game-board">
-      <canvas id="canvas" width="700" height="500"></canvas>
+      <canvas id="canvas" width="1550" height="850"></canvas>
     </div>
-
+    <button id="restart-button" style="display: none">Restart</button>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/classes.js"></script>
   </body>

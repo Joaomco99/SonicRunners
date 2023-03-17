@@ -1,8 +1,12 @@
 window.onload = () => {
+  
+
+  
   document.getElementById('start-button').onclick = () => {
-    
     startGame();
+    document.getElementById('start-button').style.display = 'none';
   };
+  
 
   const canvas = document.getElementById('canvas');
 
@@ -26,12 +30,16 @@ window.onload = () => {
   );
 
   function startGame() {
+    
+    document.querySelector('.game-intro').style.display = 'none';
+    document.querySelector('.arrow-img').style.display = 'none';
 
     let frames = 0;
 
     let score = 0;
 
     let obstacles = [];
+
 
     const gameInterval = setInterval(() => {
  
@@ -40,39 +48,61 @@ window.onload = () => {
       ctx.drawImage(road, 0, 0, canvas.width, canvas.height);
  
       sonic.draw();
+      sonic.update();
 
       obstacles.forEach((obstacle) => {
         obstacle.draw();
         obstacle.move();
       });
 
+      
+
+
 
       frames++;
 
-      if (frames % 150 === 0) {
+const minFrames = 150;
+const maxFrames = 200;
 
-        const randomWidth = Math.floor(Math.random() * 200) + 50;
+const framesBetweenObstacles = {
+  obstacle1: Math.floor(Math.random() * (maxFrames - minFrames + 1)) + minFrames,
+  obstacle2: Math.floor(Math.random() * (maxFrames - minFrames + 1)) + minFrames,
+  obstacle3: Math.floor(Math.random() * (maxFrames - minFrames + 1)) + minFrames,
+};
 
-        const randomX = Math.floor(Math.random() * (canvas.width - randomWidth));
+if (frames % framesBetweenObstacles.obstacle1 === 0 && obstacles.every(obstacle => frames > obstacle.framesUntilNext)) {
+  const obstacle1 = new Obstacle1(700, 600, 500, ctx);
+  obstacle1.framesUntilNext = frames + framesBetweenObstacles.obstacle1;
+  obstacles.push(obstacle1);
+}
 
-        const obstacle = new Obstacle(randomX, 0, randomWidth, ctx);
+if (frames % framesBetweenObstacles.obstacle2 === 0 && obstacles.every(obstacle => frames > obstacle.framesUntilNext)) {
+  const obstacle2 = new Obstacle2(900, 700, 800, ctx);
+  obstacle2.framesUntilNext = frames + framesBetweenObstacles.obstacle2;
+  obstacles.push(obstacle2);
+}
+
+if (frames % framesBetweenObstacles.obstacle3 === 0 && obstacles.every(obstacle => frames > obstacle.framesUntilNext)) {
+  const obstacle3 = new Obstacle3(900, 800, 900, ctx);
+  obstacle3.framesUntilNext = frames + framesBetweenObstacles.obstacle3;
+  obstacles.push(obstacle3);
+}
 
 
-        obstacles.push(obstacle);
-      }
+      obstacles.forEach((obstacle1, index) => {
 
-      obstacles.forEach((obstacle, index) => {
+        if (sonic.x < obstacle1.x + obstacle1.width &&
+          sonic.x + sonic.width > obstacle1.x &&
 
-        if (sonic.x < obstacle.x + obstacle.width &&
-          sonic.x + sonic.width > obstacle.x &&
-
-          sonic.y < obstacle.y + obstacle.height &&
-          sonic.y + sonic.height > obstacle.y) {
+          sonic.y < obstacle1.y + obstacle1.height &&
+          sonic.y + sonic.height > obstacle1.y) {
 
 
           console.log('collision detected!');
 
+
           clearInterval(gameInterval);
+          document.getElementById('restart-button').style.display = 'block';
 
 
           ctx.fillStyle = 'black';
@@ -88,13 +118,17 @@ window.onload = () => {
         }
 
 
-        if (obstacle.y > canvas.height) {
+        if (obstacle1.y > canvas.height) {
 
           obstacles.splice(index, 1);
 
         }
 
       });
+
+
+
+      
 
 
       ctx.font = '30px Arial';
@@ -109,6 +143,15 @@ window.onload = () => {
 
   }
 
+  let gameInterval = null;
+document.getElementById('restart-button').onclick = () => {
+  startGame();
+  score = 0; // Reset the score
+  obstacles = []; // Reset the obstacles
+  document.getElementById('restart-button').style.display = 'none';
+};
+
+  
 
   document.addEventListener('keydown', (event) => {
     switch (event.code) {
@@ -128,3 +171,8 @@ window.onload = () => {
 
 
 };
+
+
+
+
+
