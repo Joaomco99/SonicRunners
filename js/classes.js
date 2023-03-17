@@ -1,7 +1,7 @@
 class Sonic {
     constructor(x, y, width, height, ctx) {
         this.x = 50;
-        this.y = 760; // update y to be the ground level of obstacle 1
+        this.y = 760; 
         this.width = width;
         this.height = height;
         this.image = new Image();
@@ -44,7 +44,7 @@ class Sonic {
 class Obstacle1 {
     constructor(x, y, width, ctx) {
         this.x = 1450;
-        this.y = 700; // update y to be the ground level
+        this.y = 700; 
         this.width = 50;
         this.height = 50;
         this.image = new Image();
@@ -63,7 +63,7 @@ class Obstacle1 {
 class Obstacle2 {
     constructor(x, y, width, ctx) {
         this.x = 1450;
-        this.y = 700; // update y to be the ground level
+        this.y = 700; 
         this.width = 50;
         this.height = 50;
         this.image = new Image();
@@ -82,7 +82,7 @@ class Obstacle2 {
 class Obstacle3 {
     constructor(x, y, width, ctx) {
         this.x = 1450;
-        this.y = 530; // update y to be the ground level
+        this.y = 530; 
         this.width = 100;
         this.height = 70;
         this.image = new Image();
